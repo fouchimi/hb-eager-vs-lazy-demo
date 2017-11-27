@@ -37,12 +37,12 @@ public class CreateStudentDemo {
 			//commit the transaction
 			session.getTransaction().commit();
 			
-			
 		}catch(Exception ex) {
 			
 		}finally {
 			//close the session
 			session.close();
+			factory.close();
 		}
 	}
 }
