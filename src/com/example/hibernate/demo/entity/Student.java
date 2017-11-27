@@ -1,4 +1,4 @@
-package com.example.demo.hibernate.entities;
+package com.example.hibernate.demo.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
