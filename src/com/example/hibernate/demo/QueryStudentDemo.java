@@ -27,13 +27,17 @@ public class QueryStudentDemo {
 			session.beginTransaction();
 			
 			//Query students list
-			List<Student> studentList = session.createQuery("from Student").list();
+			List<Student> studentList = session.createQuery("FROM Student").list();
 			
 			//Iterate through studentList
 			displayStudents(studentList);                                                                        
 			
 			//Filter students based on firstName
-			studentList = session.createQuery("from Student s where s.firstName='Fouchimi'").list();
+			studentList = session.createQuery("FROM Student s WHERE s.firstName='Fouchimi'").list();
+			
+			displayStudents(studentList);
+			
+			studentList = session.createQuery("FROM Student s WHERE s.firstName='Fouchimi' OR s.lastName='Ball'").list();
 			
 			displayStudents(studentList);
 			
