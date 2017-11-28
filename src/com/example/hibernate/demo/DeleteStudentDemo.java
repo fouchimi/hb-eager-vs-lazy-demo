@@ -24,30 +24,15 @@ public class DeleteStudentDemo {
 			// begin the transaction
 		    session.beginTransaction();
 			
-			int studentId = 1;
-			//use the session to save the java object
-			
-			//create the student object
-			System.out.println("Retrieve student based on its id" + studentId);
-			Student theStudent = session.get(Student.class, studentId);
-			
-			//Get complete my student
-			System.out.println("Get complete  : " + theStudent);
-			
-			System.out.println("Updating student ...");
-			theStudent.setFirstName("Scooby");
+		    System.out.println("Delete student id 5");
+			session.createQuery("DELETE FROM Student WHERE id=5 ").executeUpdate();
 			
 			//commit the transaction
 			session.getTransaction().commit();
 			
-			// New code
-			session = factory.getCurrentSession();
-			session.beginTransaction();
+			System.out.println("Done !!!");
 			
-			// Update email for all students
-			System.out.println("Update email for all students");
-			session.createQuery("update Student set email='foo@gmail.com'").executeUpdate();
-			
+			//commit the transaction
 			session.getTransaction().commit();
 			
 		}catch(Exception ex) {

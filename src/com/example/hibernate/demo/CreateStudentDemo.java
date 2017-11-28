@@ -1,5 +1,7 @@
 package com.example.hibernate.demo;
 
+import java.util.Date;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -8,41 +10,40 @@ import com.example.hibernate.demo.entity.Student;
 
 public class CreateStudentDemo {
 
-	
 	public static void main(String[] args) {
-		
-		//Create session factory
-		SessionFactory factory = new Configuration()
-				                 .configure("hibernate.cfg.xml")
-				                 .addAnnotatedClass(Student.class)
-				                 .buildSessionFactory();
-		
-		Session session = (Session) factory.getCurrentSession();
-		
-		try {
-			
-			//use the session to save the java object
-			
-			//create the student object
-			System.out.println("Creating temp Student ...");
-			Student theStudent = new Student("Emmanuel", "Macron", "emmanuelmacron@gmail.com");
-			
-			// begin the transaction
-			session.beginTransaction();
-			
-			//save the object in the session
-			System.out.println("Saving the student ...");
-			session.save(theStudent);
-			
-			//commit the transaction
-			session.getTransaction().commit();
-			
-		}catch(Exception ex) {
-			
-		}finally {
-			//close the session
-			session.close();
-			factory.close();
-		}
-	}
+        
+        // create session factory
+        SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Student.class)
+                .buildSessionFactory();
+ 
+        // create a session
+        Session session = factory.getCurrentSession();
+ 
+        try {
+            // create a student object
+            System.out.println("creating a new student object ...");
+ 
+            String theDateOfBirthStr = "31/12/1998";
+ 
+            Date theDateOfBirth = DateUtils.parseDate(theDateOfBirthStr);
+ 
+            Student temoStudent = new Student("Paully", "Doe", "paul@luv.com", theDateOfBirth);
+ 
+            // start transaction
+            session.beginTransaction();
+ 
+            // save the student object
+            System.out.println("Saving the student ...");
+            session.save(temoStudent);
+ 
+            // commit transaction
+            session.getTransaction().commit();
+ 
+            System.out.println("Success!");
+        } catch (Exception exc) {
+            exc.printStackTrace();
+        } finally {
+            factory.close();
+        }
+    }
 }
