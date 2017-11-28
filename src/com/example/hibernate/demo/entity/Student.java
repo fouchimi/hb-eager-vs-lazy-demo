@@ -26,6 +26,14 @@ public class Student {
 	@Column(name="id")
 	private int id;
 	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	
 	@Column(name="first_name")
 	private String firstNanme;
 	
