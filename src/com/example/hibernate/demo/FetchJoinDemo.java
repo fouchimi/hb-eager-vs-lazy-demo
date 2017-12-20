@@ -4,12 +4,13 @@ package com.example.hibernate.demo;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 
 import com.example.hibernate.demo.entity.Course;
 import com.example.hibernate.demo.entity.Instructor;
 import com.example.hibernate.demo.entity.InstructorDetail;
 
-public class EagerLazyDemo {
+public class FetchJoinDemo {
 
 	public static void main(String[] args) {
         
@@ -31,22 +32,29 @@ public class EagerLazyDemo {
             
             // get the instructor from db
             int theId = 1;
-            Instructor tempInstructor = session.get(Instructor.class, theId);
             
-            System.out.println("luv2code: Instructor: " + tempInstructor);
+            Query<Instructor> query = session.createQuery("select i from Instructor i "
+            		+ "JOIN FETCH i.courses "
+            		+ "where i.id=:theInstructorId", 
+            		Instructor.class);
             
-            System.out.println("Courses: " + tempInstructor.getCourses());
+            // set parameter on query
+            query.setParameter("theInstructorId", theId);
+            
+            Instructor tempInstructor = query.getSingleResult();
+            
+            System.out.println("tempInstructor: " + tempInstructor);
             
             // commit transaction
             session.getTransaction().commit();
-            
-            // close the session
-            session.close();
            
-            System.out.println("Session: the session is now closed !");
+            //Close the session
+            session.close();
             
-            // get course for instructor
-            System.out.println("Courses: " + tempInstructor.getCourses());
+            System.out.println("\nThe session is now closed!");
+            
+            //Fetch instructor related courses
+            System.out.println("luv2Code: Courses: " + tempInstructor.getCourses());
             
             System.out.println("Done!");
         } catch (Exception exc) {
